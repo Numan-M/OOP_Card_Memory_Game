@@ -69,15 +69,55 @@ class Game:
             print_row += " | ".join(get_row) + " |"
             print(print_row)
 
+    def check_match(self, loc1, loc2):
+        cards = []
+        for card in self.cards:
+            if card.location == loc1 or card.location == loc2:
+                cards.append(card)
+        if cards[0] == cards[1]:
+            cards[0].matched = True
+            cards[1].matched = True
+            return True
+        else:
+            for card in cards:
+                print(f"{card.location}:{card}")
+            return False
+
+    def check_win(self):
+        for card in self.cards:
+            if card.matched == False:
+                return False
+        return True
+
+    def check_location(self, time):
+        while True:
+            guess = input(f"What's the location of your {time} card?")
+            if guess.upper() in self.locations:
+                return guess.upper()
+            else:
+                print("That's not a valid location. It should look like this: A1")
+
+    def start_game(self):
+        game_running = True
+        print("Memory game")
+        self.set_cards()
+        while game_running:
+            self.create_grid()
+            guess1 = self.check_location("first")
+            guess2 = self.check_location("second")
+            if self.check_match(guess1, guess2):
+                if self.check_win():
+                    print("You win!!")
+                    self.create_grid()
+                    game_running = False
+            else:
+                input("Those cards are not a match. Press Enter to contine")
+        print("GAME OVER")
+
 
 if __name__ == "__main__":
     game = Game()
-    game.set_cards()
-    game.cards[0].matched = True
-    game.cards[1].matched = True
-    game.cards[2].matched = True
-    game.cards[3].matched = True
-    game.create_grid()
+    game.start_game()
 
     # print(game.create_row(1))
     # print(game.create_row(2))
