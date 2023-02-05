@@ -48,9 +48,27 @@ class Game:
                 card = Card(word, random_location)  # Card instance
                 self.cards.append(card)  # appending instance to instance attribute
 
+    def create_row(self, num):
+        row = []
+        for column in self.columns:
+            for card in self.cards:
+                if card.location == f"{column}{num}":
+                    if card.matched:
+                        row.append(str(card))
+                    else:
+                        row.append("   ")
+        return row
+
 
 if __name__ == "__main__":
     game = Game()
     game.set_cards()
-    for card in game.cards:
-        print(card)
+
+    game.cards[0].matched = True
+    game.cards[1].matched = True
+    game.cards[2].matched = True
+    game.cards[3].matched = True
+    print(game.create_row(1))
+    print(game.create_row(2))
+    print(game.create_row(3))
+    print(game.create_row(4))
