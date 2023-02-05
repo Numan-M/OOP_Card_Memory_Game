@@ -59,16 +59,27 @@ class Game:
                         row.append("   ")
         return row
 
+    def create_grid(self):
+        # | A | B | C | D |
+        header = " |  " + "  |  ".join(self.columns) + "  |"
+        print(header)
+        for row in range(1, self.size + 1):
+            print_row = f"{row}| "
+            get_row = self.create_row(row)
+            print_row += " | ".join(get_row) + " |"
+            print(print_row)
+
 
 if __name__ == "__main__":
     game = Game()
     game.set_cards()
-
     game.cards[0].matched = True
     game.cards[1].matched = True
     game.cards[2].matched = True
     game.cards[3].matched = True
-    print(game.create_row(1))
-    print(game.create_row(2))
-    print(game.create_row(3))
-    print(game.create_row(4))
+    game.create_grid()
+
+    # print(game.create_row(1))
+    # print(game.create_row(2))
+    # print(game.create_row(3))
+    # print(game.create_row(4))
